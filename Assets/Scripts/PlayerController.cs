@@ -11,19 +11,27 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField]
     private float jumpPower = 10;
 
+    [SerializeField]
+    private GameObject weapon;
+
     private Rigidbody2D rigidbody;
+    private Animator animator;
 
     // Start is called before the first frame update
     private void Start() {
         rigidbody = player.GetComponent<Rigidbody2D>();
+        animator = player.GetComponent<Animator>();
     } // Start
 
     // Update is called once per frame
     private void Update() {
-        if (Input.GetButtonDown("Jump")) {
+        if (Input.GetKeyDown(KeyCode.UpArrow)) {
             Jump();
-        }
-        Debug.Log(rigidbody.velocity.y);
+        } // if jump
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Attack();
+        } // if attack
     } // Update
 
     private void Jump() {
@@ -31,4 +39,8 @@ public class NewBehaviourScript : MonoBehaviour
             rigidbody.velocity = new Vector2(0, jumpPower);
         }
     } // Jump
+
+    private void Attack() {
+        animator.SetTrigger("Attack");
+    } // Attack
 }
