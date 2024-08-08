@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
     private RuntimeAnimatorController testAnim;
 
     private Rigidbody2D rb;
-    private Animator animator;
+    public Animator animator;
     [SerializeField]
-    private String dinosaurSkin = "fatBird";
+    public String dinosaurSkin;
 
     private Vector2 duckColliderOffset;
     private Vector2 duckColliderSize;
@@ -35,21 +35,18 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private void Start() {
         rb = player.GetComponent<Rigidbody2D>();
-        player.GetComponent<Animator>().runtimeAnimatorController = testAnim;
-        animator = player.GetComponent<Animator>();
+        //player.GetComponent<Animator>().runtimeAnimatorController = testAnim;
+        //animator = player.GetComponent<Animator>();
+        
+        dinosaurSkin = "";
 
-        duckColliderOffset = new Vector2(CharacterStats.stats[dinosaurSkin + "DuckColliderOffsetX"], CharacterStats.stats[dinosaurSkin + "DuckColliderOffsetY"]);
-        duckColliderSize = new Vector2(CharacterStats.stats[dinosaurSkin + "DuckColliderSizeX"], CharacterStats.stats[dinosaurSkin + "DuckColliderSizeY"]);
-        runColliderOffset = new Vector2(CharacterStats.stats[dinosaurSkin + "RunColliderOffsetX"], CharacterStats.stats[dinosaurSkin + "RunColliderOffsetY"]);
-        runColliderSize = new Vector2(CharacterStats.stats[dinosaurSkin + "RunColliderSizeX"], CharacterStats.stats[dinosaurSkin + "RunColliderSizeY"]);
-        Debug.Log(dinosaurSkin);
-        Debug.Log(duckColliderOffset);
-        Debug.Log(duckColliderSize);
-        Debug.Log(runColliderOffset);
-        Debug.Log(runColliderSize);
+        //duckColliderOffset = new Vector2(CharacterStats.stats[dinosaurSkin + "DuckColliderOffsetX"], CharacterStats.stats[dinosaurSkin + "DuckColliderOffsetY"]);
+        //duckColliderSize = new Vector2(CharacterStats.stats[dinosaurSkin + "DuckColliderSizeX"], CharacterStats.stats[dinosaurSkin + "DuckColliderSizeY"]);
+        //runColliderOffset = new Vector2(CharacterStats.stats[dinosaurSkin + "RunColliderOffsetX"], CharacterStats.stats[dinosaurSkin + "RunColliderOffsetY"]);
+        //runColliderSize = new Vector2(CharacterStats.stats[dinosaurSkin + "RunColliderSizeX"], CharacterStats.stats[dinosaurSkin + "RunColliderSizeY"]);
 
-        player.GetComponent<BoxCollider2D>().offset = runColliderOffset;
-        player.GetComponent<BoxCollider2D>().size = runColliderSize;
+        //player.GetComponent<BoxCollider2D>().offset = runColliderOffset;
+        //player.GetComponent<BoxCollider2D>().size = runColliderSize;
     } // Start
 
     // Update is called once per frame
@@ -104,4 +101,24 @@ public class PlayerController : MonoBehaviour
             } // if
         } // if
     } // Duck
+
+    public void SetCharacter(String dinoSkin) {
+        dinosaurSkin = char.ToLower(dinoSkin[0]) + dinoSkin[1..];
+        player.GetComponent<Animator>().runtimeAnimatorController = GameObject.Find("Choose" + dinoSkin).GetComponent<CharacterSelect>().anim;
+        animator = player.GetComponent<Animator>();
+
+        Debug.Log(dinosaurSkin);
+
+        duckColliderOffset = new Vector2(CharacterStats.stats[dinosaurSkin + "DuckColliderOffsetX"], CharacterStats.stats[dinosaurSkin + "DuckColliderOffsetY"]);
+        duckColliderSize = new Vector2(CharacterStats.stats[dinosaurSkin + "DuckColliderSizeX"], CharacterStats.stats[dinosaurSkin + "DuckColliderSizeY"]);
+        runColliderOffset = new Vector2(CharacterStats.stats[dinosaurSkin + "RunColliderOffsetX"], CharacterStats.stats[dinosaurSkin + "RunColliderOffsetY"]);
+        runColliderSize = new Vector2(CharacterStats.stats[dinosaurSkin + "RunColliderSizeX"], CharacterStats.stats[dinosaurSkin + "RunColliderSizeY"]);
+
+        player.GetComponent<BoxCollider2D>().offset = runColliderOffset;
+        player.GetComponent<BoxCollider2D>().size = runColliderSize;
+
+        if (dinosaurSkin.Equals("duck")) {
+            player.GetComponent<SpriteRenderer>().flipX = true;
+        }
+    }
 } // PlayerController
