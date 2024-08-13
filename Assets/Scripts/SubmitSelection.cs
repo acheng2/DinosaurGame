@@ -16,6 +16,7 @@ public class SubmitSelection : MonoBehaviour
     void Start()
     {
         selectionScreen.SetActive(true);
+        GameController.gamePlaying = false;
         playerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
     }
 
@@ -30,6 +31,7 @@ public class SubmitSelection : MonoBehaviour
             String newDinoSkin = CharacterSelect.dinosaurSkin;
             playerController.SetCharacter(newDinoSkin);
             selectionScreen.SetActive(false);
+            GameController.gamePlaying = true;
         } else {
             Debug.Log("no character selected");
         }

@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private GameObject player;
 
     [SerializeField]
-    private float jumpPower = 10;
+    private float jumpPower = 15;
 
     [SerializeField]
     private GameObject weapon;
@@ -51,30 +51,32 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            if (animationState == 0) {
-                Jump();
-            } // if
-        } // if jump
+        if (GameController.gamePlaying) {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                if (animationState == 0) {
+                    Jump();
+                } // if
+            } // if jump
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Attack();
-        } // if attack
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                Attack();
+            } // if attack
 
-        if (Input.GetKey(KeyCode.DownArrow)) {
-            Duck();
-        } // if duck
+            if (Input.GetKey(KeyCode.DownArrow)) {
+                Duck();
+            } // if duck
 
-        if (Input.GetKeyUp(KeyCode.DownArrow)) {
-            if (animationState == 1) {
-                animationState = 0;
-            } // if
-            if (colliderState == 1) {
-                colliderState = 0;
-                player.GetComponent<BoxCollider2D>().offset = runColliderOffset;
-                player.GetComponent<BoxCollider2D>().size = runColliderSize;
-            } // if
-        } // if finish duck
+            if (Input.GetKeyUp(KeyCode.DownArrow)) {
+                if (animationState == 1) {
+                    animationState = 0;
+                } // if
+                if (colliderState == 1) {
+                    colliderState = 0;
+                    player.GetComponent<BoxCollider2D>().offset = runColliderOffset;
+                    player.GetComponent<BoxCollider2D>().size = runColliderSize;
+                } // if
+            } // if finish duck
+        } // if game playing
     } // Update
 
     private void Jump() {
@@ -120,5 +122,5 @@ public class PlayerController : MonoBehaviour
         if (dinosaurSkin.Equals("duck")) {
             player.GetComponent<SpriteRenderer>().flipX = true;
         }
-    }
+    } // SetCharacter
 } // PlayerController
