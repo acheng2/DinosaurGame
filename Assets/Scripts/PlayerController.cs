@@ -121,6 +121,9 @@ public class PlayerController : MonoBehaviour
 
         if (dinosaurSkin.Equals("duck")) {
             player.GetComponent<SpriteRenderer>().flipX = true;
+            player.transform.localScale = new Vector3(5, 5, 1);
+        } else if (dinosaurSkin.Equals("fatBird")) {
+            player.transform.localScale = new Vector3(4, 4, 1);
         }
     } // SetCharacter
 } // PlayerController

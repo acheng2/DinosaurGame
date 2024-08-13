@@ -29,10 +29,19 @@ public class ObstacleSpawner : MonoBehaviour
 
     
     IEnumerator Obstacles() {
-        Debug.Log(GameController.gamePlaying);
         while (GameController.gamePlaying) {
             //plantExist = true;
-            Instantiate(obstacle, new Vector3(transform.position.x, -2.28f, transform.position.z), Quaternion.identity);
+            int flying = Random.Range(1, 3);
+            float newY = 0f;
+            if (flying == 1) {
+                // if ground obstacle
+                newY = -2.28f;
+            } else if (flying == 2) {
+                // if flying obstacle
+                newY = -0.5f;
+            } // if-else
+            Debug.Log(flying + "\t" + newY);
+            Instantiate(obstacle, new Vector3(transform.position.x, newY, transform.position.z), Quaternion.identity);
             yield return new WaitForSeconds(2);
         } // while
     }

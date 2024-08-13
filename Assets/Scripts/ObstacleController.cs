@@ -11,6 +11,12 @@ public class ObstacleController : MonoBehaviour
     void Start() {
         
     }
+    
+    void Update() {
+        if (GameController.gameRestart) {
+            Destroy(gameObject);
+        } // if
+    }
 
     // Update is called once per frame
     void FixedUpdate() {
@@ -24,6 +30,7 @@ public class ObstacleController : MonoBehaviour
         if (collider.gameObject.tag.Equals("Player")) {
             Debug.Log("hit");
             GameController.gamePlaying = false;
+            GameController.gameEnd = true;
         } else if (collider.gameObject.tag.Equals("Catcher")) {
             Debug.Log("gone");
             Destroy(gameObject);
