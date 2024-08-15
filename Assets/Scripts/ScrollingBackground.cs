@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScrollingBackground : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class ScrollingBackground : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        if (GameController.gamePlaying) {
+        if (!SceneManager.GetActiveScene().name.Equals("GameScene") || GameController.gamePlaying) {
             distance += Time.deltaTime * speed;
             mat.SetTextureOffset("_MainTex", Vector2.right * distance);
         }
